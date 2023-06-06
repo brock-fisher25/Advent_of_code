@@ -36,7 +36,7 @@
 
 
 def read_text_file():
-    with open('data.txt') as file:
+    with open('Day_1_input.txt') as file:
         return file.readline()
 
 def first_part():
