@@ -15,7 +15,20 @@
 
 import hashlib
 
-if __name__ == "__main__":
+def part1():
+    base_input = 'ckczppom'
+    input = base_input 
+    lowest_num = 1
+    while True:
+        input += str(lowest_num)
+        encoded = input.encode()
+        result = hashlib.md5(encoded)
+        if result.hexdigest().startswith('00000'):
+            return lowest_num
+        lowest_num += 1
+        input = base_input
+
+def part2():
     base_input = 'ckczppom'
     input = base_input 
     lowest_num = 1
@@ -24,7 +37,10 @@ if __name__ == "__main__":
         encoded = input.encode()
         result = hashlib.md5(encoded)
         if result.hexdigest().startswith('000000'):
-            print(lowest_num)
-            exit()
+            return lowest_num
         lowest_num += 1
         input = base_input
+
+if __name__ == "__main__":
+    print(part1()) #returns 117946
+    print(part2()) #returns 3938038
