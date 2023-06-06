@@ -15,7 +15,7 @@
 
 import hashlib
 
-def part1():
+def first_part():
     base_input = 'ckczppom'
     input = base_input 
     lowest_num = 1
@@ -28,7 +28,7 @@ def part1():
         lowest_num += 1
         input = base_input
 
-def part2():
+def second_part():
     base_input = 'ckczppom'
     input = base_input 
     lowest_num = 1
@@ -42,5 +42,5 @@ def part2():
         input = base_input
 
 if __name__ == "__main__":
-    print(part1()) #returns 117946
-    print(part2()) #returns 3938038
+    print(first_part()) #returns 117946
+    print(second_part()) #returns 3938038
