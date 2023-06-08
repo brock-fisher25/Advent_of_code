@@ -3,12 +3,12 @@ def read_text_file():
         return file.readlines()
     
 def toggle(map, first_instruction, second_instruction, state):
-    first_set = first_instruction.split(',')
-    second_set = second_instruction.split(',')
-    first_set = [eval(i) for i in first_set]
-    second_set = [eval(i) for i in second_set]
-    for i in range(first_set[0], second_set[0] + 1):
-        for j in range(first_set[1], second_set[1] + 1):
+    row = first_instruction.split(',')
+    col = second_instruction.split(',')
+    row = [eval(i) for i in row]
+    col = [eval(i) for i in col]
+    for i in range(row[0], col[0] + 1):
+        for j in range(row[1], col[1] + 1):
             if state == 'off':
                 map[i][j] = 0
             elif state == 'on':
