@@ -1,36 +1,42 @@
-# --- Day 3: Perfectly Spherical Houses in a Vacuum ---
-# Santa is delivering presents to an infinite two-dimensional grid of houses.
-
-# He begins by delivering a present to the house at his starting location, and then an elf at the North Pole calls him via radio and tells him where to move next. Moves are always exactly one house to the north (^), south (v), east (>), or west (<). After each move, he delivers another present to the house at his new location.
+# --- Day 5: Doesn't He Have Intern-Elves For This? ---
+# Santa needs help figuring out which strings in his text file are naughty or nice.
 #
-# However, the elf back at the north pole has had a little too much eggnog, and so his directions are a little off, and Santa ends up visiting some houses more than once. How many houses receive at least one present?
+# A nice string is one with all of the following properties:
 #
+# It contains at least three vowels (aeiou only), like aei, xazegov, or aeiouaeiouaeiou.
+# It contains at least one letter that appears twice in a row, like xx, abcdde (dd), or aabbccdd (aa, bb, cc, or dd).
+# It does not contain the strings ab, cd, pq, or xy, even if they are part of one of the other requirements.
 # For example:
 #
-# > delivers presents to 2 houses: one at the starting location, and one to the east.
-# ^>v< delivers presents to 4 houses in a square, including twice to the house at his starting/ending location.
-# ^v^v^v^v^v delivers a bunch of presents to some very lucky children at only 2 houses.
-# Your puzzle answer was 2081.
+# ugknbfddgicrmopn is nice because it has at least three vowels (u...i...o...), a double letter (...dd...), and none of the disallowed substrings.
+# aaa is nice because it has at least three vowels and a double letter, even though the letters used by different rules overlap.
+# jchzalrnumimnmhp is naughty because it has no double letter.
+# haegwjzuvuyypxyu is naughty because it contains the string xy.
+# dvszwmarrgswjxmb is naughty because it contains only one vowel.
+# How many strings are nice?
+#
+# Your puzzle answer was 238.
+#
+# The first half of this puzzle is complete! It provides one gold star: *
 #
 # --- Part Two ---
-# The next year, to speed up the process, Santa creates a robot version of himself, Robo-Santa, to deliver presents with him.
-#
-# Santa and Robo-Santa start at the same location (delivering two presents to the same starting house), then take turns moving based on instructions from the elf, who is eggnoggedly reading from the same script as the previous year.
-#
-# This year, how many houses receive at least one present?
+# Realizing the error of his ways, Santa has switched to a better model of determining whether a string is naughty or nice. None of the old rules apply, as they are all clearly ridiculous.
 # 
+# Now, a nice string is one with all of the following properties:
+# 
+# It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like aaa (aa, but it overlaps).
+# It contains at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.
 # For example:
 #
-# ^v delivers presents to 3 houses, because Santa goes north, and then Robo-Santa goes south.
-# ^>v< now delivers presents to 3 houses, and Santa and Robo-Santa end up back where they started.
-# ^v^v^v^v^v now delivers presents to 11 houses, with Santa going one direction and Robo-Santa going the other.
-# Your puzzle answer was 2341.
-# 
-# Both parts of this puzzle are complete! They provide two gold stars: **
+# qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
+# xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
+# uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
+# ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
+# How many strings are nice under these new rules?
 # ----------------------------------------------------------------------------
 
 def read_text_file():
-    with open('data.txt') as file:
+    with open('Day_5_input.txt') as file:
         return file.readlines()
     
 def check_bad(s):
@@ -71,18 +77,35 @@ def first_part():
             nice_strings += 1
     return nice_strings
     
+def check_strings(substring_dict):
+    has_pairs = False
+    has_repeats = False
+    for key in substring_dict:
+        if substring_dict[key] > 2 and len(key) > 1:
+            has_pairs = True
+        if len(key) == 3:
+            if key[0] == key[2]:
+                has_repeats = True
+    return has_repeats and has_pairs
+
+
+
+
 
 def second_part():
     data = read_text_file()
     substring_dict = {}
-    for i in range(len(data)):
-        for j in range(i+1, len(data) + 1):
-            substring = data[i:j]
-            if substring in substring_dict:
-                substring_dict[substring] += 1
-            else:
-                substring_dict[substring] = 1
-    print(substring_dict)
+    nice_strings = 0
+    for string in data:
+        for i in range(len(string)):
+            for j in range(i+1, len(string) + 1):
+                substring = string[i:j]
+                if substring in substring_dict:
+                    substring_dict[substring] += 1
+                else:
+                    substring_dict[substring] = 1
+        if check_strings(substring_dict):
+            nice_strings += 1
     return
 
 if __name__ == "__main__":
