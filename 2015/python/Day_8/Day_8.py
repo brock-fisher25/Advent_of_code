@@ -4,17 +4,10 @@ def read_text_file():
         return file.readlines()
 
 def manipulate_string(string):
-    #string = string.replace('\\\\', '\\')
-  #  string = string.replace('\"', '"')
-    count_slashes = string.count('\\\\')
-    count_single_quotes = string.count('\\"')
-    count_x = string.count('\\x')
-    print("start")
-    print(count_x)
-    print(count_slashes)
-    print(count_single_quotes)
-    print("end")
-    return (count_x * 3) + count_slashes + count_single_quotes
+    string = string.replace('\\\\', '\\')
+    string = string.replace('\"', '"')
+    print(string)
+    return string
     
 
 
@@ -24,20 +17,14 @@ def first_part():
     count = 0
     num_chars_mem = 0
     for string in list_of_strings:
-        s1 = string.strip()
-        print(s1)
+        s1 = string.strip() # get rid of \n char
         num_chars_literal += (len(s1))
-        s2 = s1[1:-1]
-        subtract = manipulate_string(s2)
-        num_chars_mem += (len(s2) - subtract)
-        print(subtract)
-        print(len(s1))
-        print(len(s2))
-        print(num_chars_literal)
-        print(num_chars_mem)
-  #      count += 1
-   #     if count == 5:
-    #        exit()
+        print(s1)
+        mem_string = manipulate_string(s1)
+        num_chars_mem += (len(s1) - len(mem_string))
+        if count == 5:
+            exit()
+        count += 1
     return num_chars_literal - num_chars_mem
 
 def second_part():
