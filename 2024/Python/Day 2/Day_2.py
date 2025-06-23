@@ -1,5 +1,5 @@
 def read_file():
-    file = open(r"C:\Users\brock\Documents\Coding\Github\Advent_of_code\2024\Python\Day 2\input.txt", 'r')
+    file = open("input.txt", 'r')
     return file
 
 def abs_difference(x, y):
