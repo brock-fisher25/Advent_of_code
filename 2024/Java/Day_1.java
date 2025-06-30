@@ -11,7 +11,7 @@ public class Day_1 {
         for (int i = 0; i < results.length; i++) {
             System.out.println(results[i]);
         }
-
+        System.out.println("");
     }
     public static int first_solution(ArrayList<Integer> list) {
         ArrayList<Integer> list1 = new ArrayList<>();
@@ -37,7 +37,30 @@ public class Day_1 {
         return total;
     }
     public static int second_solution(ArrayList<Integer> list) {
-        return 0;
+        ArrayList<Integer> list1 = new ArrayList<>();
+        ArrayList<Integer> list2 = new ArrayList<>();
+        // create two separate lists of input values
+        boolean add_list1 = true;
+        for (Integer num : list) {
+            if (add_list1) {
+                list1.add(num);
+                add_list1 = false;
+            }
+            else {
+                list2.add(num);
+                add_list1 = true;
+            }
+        }
+        // for each number in first list, count how many times it appears in second list
+        int total = 0;
+        for (int i = 0; i < list1.size(); i++) {
+            for (int j = 0; j < list2.size(); j++) {
+                if (list1.get(i).equals(list2.get(j))) {
+                    total += list1.get(i);
+                }
+            }
+        }
+        return total;
     }
     public static ArrayList<Integer> process_input(String input) {
         ArrayList<Integer> list = new ArrayList<>();
