@@ -1,5 +1,5 @@
 def read_file():
-    file = open("input_day_7.txt", "r")
+    file = open("input_day_8.txt", "r")
     return file
 
 def check_node(node, result_map):
