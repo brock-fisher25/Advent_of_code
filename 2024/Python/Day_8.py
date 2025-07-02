@@ -2,11 +2,67 @@ def read_file():
     file = open("input_day_7.txt", "r")
     return file
 
+def check_node(node, result_map):
+    if node[0] >= 0 and node[0] <= len(result_map) - 1 and node[1] >= 0 and node[1] <= len(result_map[0]) - 1:
+        result_map[node[0]][node[1]] = '#'
+        return result_map, False
+    return result_map, True
+
 def check_map_two(result_map, i, j, vert_index, hor_index):
     hor_distance = abs(j - hor_index)
     vert_distance = abs(i - vert_index)
+    top_node_pos = [i, j]
+    bot_node_pos = [vert_index, hor_index]
+    forward_slash, back_slash, pipe = False, False, False
+    back_slash = False
+    # first node is to the right of second node
+    if top_node_pos[1] > bot_node_pos[1]:
+        forward_slash = True
+    # first node is to the left of second node
+    elif top_node_pos[1] < bot_node_pos[1]:
+        back_slash = True
+    else:
+        # nodes are stacked
+        pipe = True
     # loop through entire result map, turning entire lines into antinodes
-
+    # build antinodes above
+    done = False
+    for _ in range(i,-1,-1):
+        new_node = []
+        i = i - vert_distance
+        new_node.append(i)
+        if forward_slash:
+            j = j + hor_distance
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        elif back_slash:
+            j = j - hor_distance
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        elif pipe:
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        if done:
+            break
+    # build antinodes below
+    done = False
+    for _ in range(i, len(result_map)):
+        new_node = []
+        i = i + vert_distance
+        new_node.append(i)
+        if forward_slash:
+            j = j - hor_distance
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        elif back_slash:
+            j = j + hor_distance
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        elif pipe:
+            new_node.append(j)
+            result_map, done = check_node(new_node, result_map)
+        if done:
+            break
     return result_map
 
 
@@ -56,7 +112,6 @@ def solution_one():
     file = read_file()
     chars = []
     orig_map = []
-    char_map = []
     total = 0
     # get list of all different characters possible throughout map, and create a blank map
     cols = 0
@@ -96,7 +151,7 @@ def solution_two():
         rows += 1
     result_map = [['.'] * cols for _ in range(rows)]
     for char in chars:
-        result_map = create_result_map(result_map, char, orig_map)
+        result_map = create_result_map(result_map, char, orig_map, False)
     for line in result_map:
         if '#' in line:
             total += line.count('#')
@@ -108,6 +163,5 @@ def solution_two():
 if __name__ == '__main__':
     answer_one = solution_one()
     answer_two = solution_two()
-
     print(answer_one)
     print(answer_two)
