@@ -23,11 +23,17 @@ def process_num_list(num_list, j):
             break
     # search num_list from the start to see if there is a spot we can put the group of numbers
     done = False
+    list_len = j - count
     check_count = 0
-    for i in range(len(num_list)):
+    for i in range(list_len):
         if num_list[i] == '.':
             check_count += 1
-            for k in range(i+1, len(num_list)):
+            # checks to see if count only has one
+            if check_count == count:
+                num_list[i] = num
+                num_list[j] = '.'
+                break
+            for k in range(i+1, list_len):
                 if num_list[k] == '.':
                     check_count += 1
                     if check_count == count:
@@ -95,7 +101,7 @@ def solution_two():
         if num_list[j] != '.':
             num_list, j = process_num_list(num_list, j)
         else:
-            j =- 1
+            j -= 1
     total = 0
     for index in range(len(num_list)):
         if num_list[index]== '.':
@@ -103,10 +109,11 @@ def solution_two():
         total += int(num_list[index]) * index
     return total
 
-
-
-
 if __name__ == '__main__':
+    answer_one = solution_one()
+    answer_two = solution_two()
+    print(answer_one)
+    print(answer_two) #6332916203942 is too low
     answer_one = solution_one()
     answer_two = solution_two()
     print(answer_one)
