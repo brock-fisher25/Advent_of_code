@@ -37,21 +37,6 @@ def process_stones(stone, stone_dict, stone_count, blinks):
     stone_dict[(original_stone, blinks)] = stone_count
     return stone_count
 
-# def solution_one():
-#     stones = read_file()
-#     blinks = 0
-#     stone_dict = {}
-
-#     while blinks < 25:
-#         added_stones = []
-#         for i in range(len(stones)):
-#             new_stone, added_stone = process_stone(stones[i], stone_dict)
-#             stones[i] = new_stone
-#             if added_stone:
-#                 added_stones.append(added_stone)
-#         stones += added_stones
-#         blinks += 1
-#     return len(stones)
 def solution_one():
     stones = read_file()
     stone_dict = {}
