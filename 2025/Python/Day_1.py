@@ -1,5 +1,5 @@
 def read_file():
-    file = open("C:\Documents\Personal\Github\Advent-of-code\input.txt", "r")
+    file = open("input.txt", "r")
     return file
 
 def solution_one():
@@ -73,3 +73,4 @@ if __name__ == '__main__':
     answer_two = solution_two()
     print(answer_one)
     print(answer_two)
+
