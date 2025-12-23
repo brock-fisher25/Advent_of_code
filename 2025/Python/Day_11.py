@@ -33,7 +33,10 @@ def dfs2(curr_device, end, devices, path):
     paths = working_path.split(',')
     path_to_record = ''
     for x in reversed(paths):
-        path_to_record = x + ',' + path_to_record
+        if path_to_record == '':
+            path_to_record = x
+        else:
+            path_to_record = x + ',' + path_to_record
         visited2[path_to_record] = sum
     return sum
 
