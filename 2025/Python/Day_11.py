@@ -16,28 +16,22 @@ def dfs1(curr_device, end, devices):
     visited1[curr_device] = sum
     return sum
 
-def dfs2(curr_device, end, devices, path):
+def dfs2(curr_device, end, devices, seen_dac, seen_fft):
+    if curr_device == 'dac':
+        seen_dac = True
+    if curr_device == 'fft':
+        seen_fft = True
+
     if end in devices[curr_device]:
-        if 'dac' in path and 'fft' in path:
-            return 1
-        return 0
-    if path in visited2:
-        return visited2[path]
-    if path == '':
-        working_path = curr_device
-    else:
-        working_path = path + ',' + curr_device
+        return 1 if seen_fft and seen_dac else 0
+    
+    key = (curr_device, seen_dac, seen_fft)
+    if key in visited2:
+        return visited2[key]
     sum = 0
     for device in devices[curr_device]:
-        sum += dfs2(device, end, devices, working_path)
-    paths = working_path.split(',')
-    path_to_record = ''
-    for x in reversed(paths):
-        if path_to_record == '':
-            path_to_record = x
-        else:
-            path_to_record = x + ',' + path_to_record
-        visited2[path_to_record] = sum
+        sum += dfs2(device, end, devices, seen_dac, seen_fft)
+    visited2[key] = sum
     return sum
 
 
@@ -72,13 +66,11 @@ def solution_two():
             for i in range(1, len(tmp)):
                 output_list.add(tmp[i])
             devices[value] = output_list
-    start = 'svr'
-    end = 'out'
-    sum = dfs2(start, end, devices, '')
+    sum = dfs2('svr', 'out', devices, False, False)
     return sum
 
 if __name__ == '__main__':
- #   answer_one = solution_one()
-  #  print(answer_one)
+    answer_one = solution_one()
+    print(answer_one)
     answer_two = solution_two()
     print(answer_two)
